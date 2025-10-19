@@ -6,7 +6,7 @@ const generateToken = require('../utils/generateToken');
 // @access Public
 const registerUser = async (req, res) => {
   try {
-    const { name, email, password, specialization, semester, skills, interests } = req.body;
+    const { name, email, password, specialization, semester,rollNo, skills, interests } = req.body;
 
     // 🧩 Basic validation
     if (!name || !email || !password) {
@@ -26,6 +26,7 @@ const registerUser = async (req, res) => {
       password,
       specialization,
       semester,
+      rollNo,
       skills,
       interests,
     });
@@ -104,6 +105,7 @@ const updateUserProfile = async (req, res) => {
     user.email = req.body.email || user.email;
     user.specialization = req.body.specialization || user.specialization;
     user.semester = req.body.semester || user.semester;
+    user.rollNo = req.body.rollNo || user.rollNo;
     user.skills = req.body.skills || user.skills;
     user.interests = req.body.interests || user.interests;
 
@@ -118,6 +120,7 @@ const updateUserProfile = async (req, res) => {
         email: updatedUser.email,
         specialization: updatedUser.specialization,
         semester: updatedUser.semester,
+        rollNo: updatedUser.rollNo,
         skills: updatedUser.skills,
         interests: updatedUser.interests,
       },

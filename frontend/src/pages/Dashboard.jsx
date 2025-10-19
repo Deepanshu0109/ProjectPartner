@@ -107,7 +107,7 @@ function Dashboard() {
       {/* Header */}
       <div className="dashboard-header">
         <div>
-          <h1 className="dashboard-title">Welcome, {user.name} 👋</h1>
+          <h1 className="dashboard-title">Welcome, {user.name} </h1> 
           <p className="dashboard-subtitle">
             Here's your recent activity and updates.
           </p>
@@ -125,7 +125,7 @@ function Dashboard() {
         {/* Pending Requests */}
         <Link to="/requests" className="stat-card">
           <h2>{stats.requests}</h2>
-          <p>Join Requests</p>
+          <p>Requests Received</p>
         </Link>
 
         {/* Updates on Requests */}

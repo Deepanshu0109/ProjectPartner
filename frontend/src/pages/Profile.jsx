@@ -8,6 +8,7 @@ function Profile() {
     email: "",
     specialization: "",
     semester: "",
+    rollNo: "",
     skills: "",
     interests: "",
   });
@@ -30,6 +31,7 @@ function Profile() {
           email: user.email || "",
           specialization: user.specialization || "",
           semester: user.semester || "",
+          rollNo: user.rollNo || "",
           skills: (user.skills || []).join(", "),
           interests: (user.interests || []).join(", "),
         });
@@ -100,7 +102,16 @@ function Profile() {
           />
           <label>Email</label>
         </div>
-
+        <div className="form-group">
+          <input
+            type="text"
+            name="rollNo"
+            value={formData.rollNo}
+            onChange ={handleChange}
+            placeholder=" "
+          />
+          <label>Roll Number</label>
+        </div>
         <div className="form-row">
           <div className="form-group">
             <input
@@ -124,7 +135,7 @@ function Profile() {
             <label>Semester</label>
           </div>
         </div>
-
+        
         <div className="form-row">
           <div className="form-group">
             <input

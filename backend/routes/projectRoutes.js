@@ -6,6 +6,7 @@ const logActivity = require("../utils/logActivity");
 const mongoose = require("mongoose");
 const router = express.Router();
 
+
 // ==========================
 // CREATE project
 // ==========================
@@ -106,6 +107,52 @@ router.post("/:id/join", protect, async (req, res) => {
     res.status(500).json({ message: "Error sending join request", error });
   }
 });
+// ==========================
+// GET single project by ID
+// ==========================
+router.get("/:id", protect, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id)
+      .populate("createdBy", "name email")
+      .populate("members", "name email")
+      .populate("requests", "name email");
+    if (!project) return res.status(404).json({ message: "Project not found" });
+    res.json(project); // just return project, frontend can handle it
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+// ==========================
+// UPDATE project
+// ==========================
+router.put("/:id", protect, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id);
+    if (!project) return res.status(404).json({ message: "Project not found" });
+
+    // Only creator can update
+    if (project.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+    const { name, description, reason, teammatesNeeded, requiredSkills } = req.body;
+
+    // Update fields if provided
+    project.name = name ?? project.name;
+    project.description = description ?? project.description;
+    project.reason = reason ?? project.reason;
+    project.teammatesNeeded = teammatesNeeded ?? project.teammatesNeeded;
+    project.requiredSkills = requiredSkills ?? project.requiredSkills;
+
+    await project.save();
+
+    res.json({ project });
+  } catch (error) {
+    console.error("Update error:", error);
+    res.status(500).json({ message: "Failed to update project", error: error.message });
+  }
+});
+
 // ==========================
 // DELETE project
 // ==========================

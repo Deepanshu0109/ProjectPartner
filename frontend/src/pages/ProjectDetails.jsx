@@ -18,14 +18,15 @@ function ProjectDetails() {
       try {
         // Get current user
         const userRes = await authFetch("/api/users/profile");
-        const user = await userRes.json();
-        const currentUserId = user._id;
+        if (!userRes.ok) throw new Error("Failed to fetch user profile");
+        const userData = await userRes.json();
+        const currentUserId = userData.user?._id || userData.user?.id;
         setUserId(currentUserId);
 
         // Get project details
-        const res = await authFetch(`/api/projects/${id}`);
-        const data = await res.json();
-        const proj = data.project || data;
+        const projRes = await authFetch(`/api/projects/${id}`);
+        if (!projRes.ok) throw new Error("Failed to fetch project");
+        const proj = await projRes.json();
         setProject(proj);
 
         // Set form data
@@ -38,12 +39,13 @@ function ProjectDetails() {
         });
 
         // Check if current user already requested or is member
-        if (
-          proj.requests?.includes(currentUserId) ||
-          proj.members?.includes(currentUserId)
-        ) {
-          setRequested(true);
-        }
+        const alreadyRequested = proj.requests?.some((r) =>
+          typeof r === "object" ? r._id === currentUserId : r === currentUserId
+        );
+        const alreadyMember = proj.members?.some((m) =>
+          typeof m === "object" ? m._id === currentUserId : m === currentUserId
+        );
+        if (alreadyRequested || alreadyMember) setRequested(true);
       } catch (error) {
         console.error("Error fetching project:", error);
       } finally {
@@ -60,23 +62,42 @@ function ProjectDetails() {
 
   const handleUpdate = async () => {
     try {
+      const body = {
+        name: formData.name,
+        description: formData.description,
+        reason: formData.reason,
+        teammatesNeeded: Number(formData.teammatesNeeded), // ensure number
+        requiredSkills: formData.requiredSkills, // array of strings
+      };
+
       const res = await authFetch(`/api/projects/${id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(body),
       });
+
       const updated = await res.json();
-      setProject({ ...project, ...updated.project && { ...updated.project }, ...updated, createdBy: project.createdBy });
+
+      if (!res.ok) {
+        // log backend error
+        console.error("Backend update error:", updated);
+        throw new Error(updated.message || "Update failed");
+      }
+
+      setProject((prev) => ({ ...prev, ...(updated.project || updated) }));
       setEditMode(false);
     } catch (error) {
       console.error("Update failed", error);
+      alert(`Update failed: ${error.message}`);
     }
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this project?")) return;
+    if (!window.confirm("Are you sure you want to delete this project?"))
+      return;
     try {
-      await authFetch(`/api/projects/${id}`, { method: "DELETE" });
+      const res = await authFetch(`/api/projects/${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error("Delete failed");
       navigate("/projects");
     } catch (error) {
       console.error("Delete failed", error);
@@ -85,9 +106,11 @@ function ProjectDetails() {
 
   const handleJoin = async () => {
     try {
-      const res = await authFetch(`/api/projects/${id}/join`, { method: "POST" });
+      const res = await authFetch(`/api/projects/${id}/join`, {
+        method: "POST",
+      });
       if (!res.ok) throw new Error("Failed to send request");
-      setRequested(true); // disable button after sending
+      setRequested(true);
     } catch (err) {
       console.error("Join error:", err);
       alert("Failed to send request or already sent.");
@@ -97,15 +120,28 @@ function ProjectDetails() {
   if (loading) return <p>Loading...</p>;
   if (!project) return <p>Project not found.</p>;
 
-  const isOwner = project.createdBy?._id === userId;
+  // ✅ Check ownership: supports both object and ID string
+  const projectOwnerId =
+    typeof project.createdBy === "object"
+      ? project.createdBy._id
+      : project.createdBy;
+  const isOwner = projectOwnerId?.toString() === userId?.toString();
 
   return (
     <div className="project-details-container">
       {editMode ? (
         <div className="edit-form">
           <input name="name" value={formData.name} onChange={handleChange} />
-          <textarea name="description" value={formData.description} onChange={handleChange} />
-          <input name="reason" value={formData.reason} onChange={handleChange} />
+          <textarea
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+          />
+          <input
+            name="reason"
+            value={formData.reason}
+            onChange={handleChange}
+          />
           <input
             name="teammatesNeeded"
             type="number"
@@ -129,15 +165,23 @@ function ProjectDetails() {
         <div className="project-info">
           <h2>{project.name}</h2>
           <p>{project.description}</p>
-          <p><strong>Reason:</strong> {project.reason}</p>
-          <p><strong>Needed:</strong> {project.teammatesNeeded}</p>
-          <p><strong>Skills:</strong> {project.requiredSkills?.join(", ")}</p>
+          <p>
+            <strong>Reason:</strong> {project.reason}
+          </p>
+          <p>
+            <strong>Needed:</strong> {project.teammatesNeeded}
+          </p>
+          <p>
+            <strong>Skills:</strong> {project.requiredSkills?.join(", ")}
+          </p>
 
           <div className="actions">
             {isOwner ? (
               <>
                 <button onClick={() => setEditMode(true)}>Edit</button>
-                <button onClick={handleDelete} className="delete-btn">Delete</button>
+                <button onClick={handleDelete} className="delete-btn">
+                  Delete
+                </button>
               </>
             ) : (
               <button onClick={handleJoin} disabled={requested}>

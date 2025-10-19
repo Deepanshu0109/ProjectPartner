@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema({
   semester: { type: Number },
   skills: [{ type: String }],
   interests: [{ type: String }],
+  rollNo: { type: String, required: true, unique: true },
   availability: {
     weekday: [{ type: String }],
     weekend: [{ type: String }]

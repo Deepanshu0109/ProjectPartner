@@ -1,0 +1,117 @@
+/* === REQUESTS PAGE CONTAINER === */
+.requests-container {
+  padding: 4rem 1rem;
+  max-width: 900px;
+  margin: 2rem auto;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* === HEADING === */
+.requests-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f1f1f;
+  margin-bottom: 2.5rem;
+  position: relative;
+}
+
+.requests-container h2::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 4px;
+  margin: 0.6rem auto 0;
+  background: linear-gradient(90deg, #007ab8, #ff6b6b);
+  border-radius: 3px;
+}
+
+/* === EMPTY TEXT === */
+.requests-container p {
+  text-align: center;
+  color: #555;
+  font-size: 1.1rem;
+}
+
+/* === REQUEST CARD === */
+.request-card {
+  background: white;
+  border-radius: 14px;
+  padding: 1.8rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+  border-left: 6px solid #007ab8;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.request-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 24px rgba(0, 122, 184, 0.15);
+  border-left-color: #ff6b6b;
+}
+
+/* === REQUEST TEXT === */
+.request-card p {
+  margin: 0.4rem 0;
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.request-card strong {
+  color: #007ab8;
+}
+
+/* === BUTTONS === */
+.request-card button {
+  border: none;
+  padding: 0.6rem 1.4rem;
+  margin-right: 0.7rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: 'Poppins', sans-serif;
+}
+
+/* Accept Button */
+.request-card button:first-of-type {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  color: white;
+  box-shadow: 0 3px 12px rgba(76, 175, 80, 0.3);
+}
+
+.request-card button:first-of-type:hover {
+  transform: translateY(-4px);
+  background: white;
+  color: #4CAF50;
+  border: 2px solid #4CAF50;
+}
+
+/* Reject Button */
+.request-card button:last-of-type {
+  background: linear-gradient(135deg, #ff6b6b, #f9a826);
+  color: white;
+  box-shadow: 0 3px 12px rgba(255, 107, 107, 0.3);
+}
+
+.request-card button:last-of-type:hover {
+  transform: translateY(-4px);
+  background: white;
+  color: #ff6b6b;
+  border: 2px solid #ff6b6b;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .request-card {
+    padding: 1.3rem;
+  }
+
+  .request-card button {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+  }
+}

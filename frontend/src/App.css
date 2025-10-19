@@ -1,0 +1,10 @@
+/* app.css */
+#root {
+  max-width: 100%;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+main {
+  padding-top: 70px; /* To offset fixed navbar */
+}

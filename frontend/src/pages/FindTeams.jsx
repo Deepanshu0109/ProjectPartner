@@ -11,23 +11,26 @@ function FindTeams() {
   useEffect(() => {
     async function fetchProjects() {
       try {
-        // get logged in user
+        // ✅ Get logged-in user properly
         const userRes = await authFetch("/api/users/profile");
+        if (!userRes.ok) throw new Error("Failed to fetch user profile");
         const userData = await userRes.json();
-        setUserId(userData._id);
+        const currentUserId = userData.user?._id || userData.user?.id;
+        setUserId(currentUserId);
 
-        // get all projects
+        // ✅ Get all projects
         const projectsRes = await authFetch("/api/projects");
+        if (!projectsRes.ok) throw new Error("Failed to fetch projects");
         let projectsData = await projectsRes.json();
 
-        // filter out user's own projects
+        // ✅ Filter out user's own projects
         projectsData = projectsData.filter((project) => {
           if (!project.createdBy) return true;
           const creatorId =
             typeof project.createdBy === "object"
               ? project.createdBy._id
               : project.createdBy;
-          return creatorId !== userData._id;
+          return creatorId !== currentUserId;
         });
 
         setProjects(projectsData);
@@ -35,6 +38,7 @@ function FindTeams() {
         console.error("Error fetching projects:", err);
       }
     }
+
     fetchProjects();
   }, []);
 
@@ -52,7 +56,7 @@ function FindTeams() {
         alert("Request sent successfully!");
         setSentRequests((prev) => [...prev, projectId]);
       } else {
-        alert(data.message);
+        alert(data.message || "Failed to send request");
       }
     } catch (err) {
       console.error(err);
@@ -103,3 +107,4 @@ function FindTeams() {
 }
 
 export default FindTeams;
+  

@@ -1,117 +1,115 @@
-/* === REQUESTS PAGE CONTAINER === */
+/* === CONTAINER === */
 .requests-container {
-  padding: 4rem 1rem;
-  max-width: 900px;
-  margin: 2rem auto;
-  font-family: 'Poppins', sans-serif;
+  max-width: 800px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
+  animation: fadeIn 0.4s ease;
 }
 
-/* === HEADING === */
+/* === TITLE === */
 .requests-container h2 {
   text-align: center;
   font-size: 2rem;
   font-weight: 700;
-  color: #1f1f1f;
-  margin-bottom: 2.5rem;
-  position: relative;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-.requests-container h2::after {
-  content: "";
-  display: block;
-  width: 70px;
-  height: 4px;
-  margin: 0.6rem auto 0;
-  background: linear-gradient(90deg, #007ab8, #ff6b6b);
-  border-radius: 3px;
-}
-
-/* === EMPTY TEXT === */
+/* === LOADING / EMPTY TEXT === */
 .requests-container p {
   text-align: center;
-  color: #555;
-  font-size: 1.1rem;
+  font-size: 1rem;
+  color: #4b5563;
 }
 
 /* === REQUEST CARD === */
 .request-card {
-  background: white;
-  border-radius: 14px;
-  padding: 1.8rem;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
   margin-bottom: 1.5rem;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
-  border-left: 6px solid #007ab8;
-  transition: all 0.25s ease;
-  position: relative;
+  transition: all 0.3s ease;
 }
 
 .request-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 24px rgba(0, 122, 184, 0.15);
-  border-left-color: #ff6b6b;
+  border-color: #2563eb;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.15);
 }
 
-/* === REQUEST TEXT === */
+/* === TEXT DETAILS === */
 .request-card p {
   margin: 0.4rem 0;
-  color: #333;
-  font-size: 1rem;
-  line-height: 1.5;
+  color: #374151;
+  font-size: 0.95rem;
 }
 
 .request-card strong {
-  color: #007ab8;
+  color: #111827;
 }
 
 /* === BUTTONS === */
 .request-card button {
+  margin-top: 1rem;
+  margin-right: 0.8rem;
+  padding: 0.6rem 1.2rem;
   border: none;
-  padding: 0.6rem 1.4rem;
-  margin-right: 0.7rem;
   border-radius: 8px;
-  font-weight: 600;
   cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
   transition: all 0.25s ease;
-  font-family: 'Poppins', sans-serif;
 }
 
-/* Accept Button */
+/* === ACCEPT BUTTON === */
 .request-card button:first-of-type {
-  background: linear-gradient(135deg, #4CAF50, #45a049);
-  color: white;
-  box-shadow: 0 3px 12px rgba(76, 175, 80, 0.3);
+  background: #2563eb;
+  color: #fff;
 }
 
 .request-card button:first-of-type:hover {
-  transform: translateY(-4px);
-  background: white;
-  color: #4CAF50;
-  border: 2px solid #4CAF50;
+  background: #1e40af;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
 }
 
-/* Reject Button */
+/* === REJECT BUTTON === */
 .request-card button:last-of-type {
-  background: linear-gradient(135deg, #ff6b6b, #f9a826);
-  color: white;
-  box-shadow: 0 3px 12px rgba(255, 107, 107, 0.3);
+  background: #ef4444;
+  color: #fff;
 }
 
 .request-card button:last-of-type:hover {
-  transform: translateY(-4px);
-  background: white;
-  color: #ff6b6b;
-  border: 2px solid #ff6b6b;
+  background: #b91c1c;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.25);
+}
+
+/* === ANIMATION === */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* === RESPONSIVE === */
 @media (max-width: 600px) {
-  .request-card {
-    padding: 1.3rem;
+  .requests-container {
+    padding: 1.5rem;
+    margin: 2rem 1rem;
   }
-
+  .requests-container h2 {
+    font-size: 1.7rem;
+  }
+  .request-card {
+    padding: 1rem;
+  }
   .request-card button {
-    display: block;
     width: 100%;
-    margin: 0.5rem 0;
+    margin-bottom: 0.5rem;
   }
 }
+

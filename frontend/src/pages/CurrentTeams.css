@@ -1,0 +1,100 @@
+/* === CONTAINER === */
+.teams-page {
+  max-width: 1100px;
+  margin: 5rem auto;
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  animation: fadeIn 0.6s ease;
+}
+
+.teams-page h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* === EMPTY STATE === */
+.teams-page p {
+  text-align: center;
+  color: #64748b;
+  font-size: 1rem;
+}
+
+/* === TEAMS GRID === */
+.teams-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* === TEAM CARD === */
+.team-card {
+  background: #f9fafb;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
+  transition: all 0.25s ease;
+}
+
+.team-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* === TEAM INFO === */
+.team-card h3 {
+  color: #2563eb;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.team-card p {
+  font-size: 0.95rem;
+  color: #334155;
+  margin: 0.4rem 0;
+}
+
+.team-card strong {
+  color: #111827;
+}
+
+/* === TEAMMATES LIST === */
+.team-card ul {
+  list-style: disc inside;
+  margin-top: 0.5rem;
+  padding-left: 1rem;
+}
+
+.team-card li {
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+/* === ANIMATIONS === */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .team-card {
+    padding: 1rem;
+  }
+  .team-card h3 {
+    font-size: 1.1rem;
+  }
+}

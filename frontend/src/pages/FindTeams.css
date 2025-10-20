@@ -1,98 +1,92 @@
-/* === FIND TEAMS CONTAINER === */
+/* === CONTAINER === */
 .find-teams {
-  padding: 4rem 1.5rem;
-  max-width: 1200px;
-  margin: 2rem auto;
-  font-family: 'Poppins', sans-serif;
+  max-width: 1100px;
+  margin: 4rem auto;
+  padding: 2rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  font-family: "Poppins", sans-serif;
 }
 
 .find-teams h2 {
+  text-align: center;
   font-size: 2rem;
   font-weight: 700;
-  text-align: center;
   margin-bottom: 2rem;
-  color: #1f1f1f;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
-/* === PROJECT LIST === */
-.projects-list {
+/* === PROJECTS LIST === */
+.find-teams .projects-list {
   list-style: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.8rem;
-  margin: 0;
   padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 1.5rem;
 }
 
-/* === PROJECT CARD === */
-.project-card {
-  background: white;
-  border-radius: 12px;
-  padding: 1.8rem;
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+/* === CARD === */
+.find-teams .project-card {
+  background: #f9fafb;
+  border-radius: 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  padding: 1.5rem;
   transition: all 0.25s ease;
-  border-left: 6px solid #007ab8; /* default blue accent */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
-.project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+.find-teams .project-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* Rotate border accent colors for variety */
-.project-card:nth-child(3n + 1) { border-left-color: #facc15; } /* yellow */
-.project-card:nth-child(3n + 2) { border-left-color: #ff6b6b; } /* coral */
-.project-card:nth-child(3n + 3) { border-left-color: #7c3aed; } /* purple */
-
-.project-card h3 {
+.find-teams .project-card h3 {
   font-size: 1.3rem;
-  font-weight: 700;
-  color: #1f1f1f;
-  margin-bottom: 0.6rem;
-}
-
-.project-card p {
-  font-size: 0.98rem;
-  color: #555;
+  color: #2563eb;
   margin-bottom: 0.5rem;
-  line-height: 1.5;
 }
 
-.project-card p:last-of-type {
-  font-size: 0.9rem;
-  color: #777;
+.find-teams .project-card p {
+  color: #4b5563;
+  font-size: 0.95rem;
+  margin-bottom: 0.4rem;
 }
 
-/* === BUTTONS === */
-.project-card button {
-  padding: 0.65rem 1.4rem;
+/* === ACTIONS === */
+.find-teams .project-actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.7rem;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+}
+
+.find-teams .project-actions button {
+  padding: 0.55rem 1.1rem;
+  border: none;
   border-radius: 8px;
   font-weight: 600;
-  font-size: 0.95rem;
-  border: none;
   cursor: pointer;
-  transition: all 0.25s ease;
-  margin-top: 0.8rem;
+  transition: all 0.3s ease;
 }
 
-.project-card a {
-  text-decoration: none;
-  display: inline-block;
+.find-teams .project-actions button:first-child {
+  background: #2563eb;
+  color: #fff;
 }
 
-/* Gradient button (matches landing CTA) */
-.project-card button {
-  background: linear-gradient(135deg, #ff6b6b, #f9a826);
-  color: white;
-  box-shadow: 0 4px 14px rgba(255, 107, 107, 0.4);
+.find-teams .project-actions button:first-child:hover {
+  background: #1e40af;
 }
 
-.project-card button:hover {
-  background: white;
-  color: #ff6b6b;
-  border: 0.1px solid #ff6b6b;
-  box-shadow: 0 6px 18px rgba(255, 107, 107, 0.5);
+.find-teams .project-actions button:last-child {
+  background: #facc15;
+  color: #111;
+}
+
+.find-teams .project-actions button:last-child:hover {
+  background: #fbbf24;
 }

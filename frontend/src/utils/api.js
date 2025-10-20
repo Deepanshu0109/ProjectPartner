@@ -20,3 +20,9 @@ export const authFetch = async (path, options = {}) => {
 
   return res;
 };
+
+export const fetchCurrentTeams = async () => {
+  const res = await authFetch("/api/projects/current-teams");
+  return res.json();
+};
+

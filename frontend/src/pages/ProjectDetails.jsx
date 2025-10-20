@@ -16,20 +16,20 @@ function ProjectDetails() {
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        // Get current user
+        // ✅ Fetch logged-in user
         const userRes = await authFetch("/api/users/profile");
         if (!userRes.ok) throw new Error("Failed to fetch user profile");
         const userData = await userRes.json();
         const currentUserId = userData.user?._id || userData.user?.id;
         setUserId(currentUserId);
 
-        // Get project details
+        // ✅ Fetch project details
         const projRes = await authFetch(`/api/projects/${id}`);
         if (!projRes.ok) throw new Error("Failed to fetch project");
         const proj = await projRes.json();
         setProject(proj);
 
-        // Set form data
+        // ✅ Setup form data
         setFormData({
           name: proj.name || "",
           description: proj.description || "",
@@ -38,7 +38,7 @@ function ProjectDetails() {
           requiredSkills: proj.requiredSkills || [],
         });
 
-        // Check if current user already requested or is member
+        // ✅ Check request/member status
         const alreadyRequested = proj.requests?.some((r) =>
           typeof r === "object" ? r._id === currentUserId : r === currentUserId
         );
@@ -66,8 +66,8 @@ function ProjectDetails() {
         name: formData.name,
         description: formData.description,
         reason: formData.reason,
-        teammatesNeeded: Number(formData.teammatesNeeded), // ensure number
-        requiredSkills: formData.requiredSkills, // array of strings
+        teammatesNeeded: Number(formData.teammatesNeeded),
+        requiredSkills: formData.requiredSkills,
       };
 
       const res = await authFetch(`/api/projects/${id}`, {
@@ -77,9 +77,7 @@ function ProjectDetails() {
       });
 
       const updated = await res.json();
-
       if (!res.ok) {
-        // log backend error
         console.error("Backend update error:", updated);
         throw new Error(updated.message || "Update failed");
       }
@@ -93,8 +91,7 @@ function ProjectDetails() {
   };
 
   const handleDelete = async () => {
-    if (!window.confirm("Are you sure you want to delete this project?"))
-      return;
+    if (!window.confirm("Are you sure you want to delete this project?")) return;
     try {
       const res = await authFetch(`/api/projects/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Delete failed");
@@ -106,9 +103,7 @@ function ProjectDetails() {
 
   const handleJoin = async () => {
     try {
-      const res = await authFetch(`/api/projects/${id}/join`, {
-        method: "POST",
-      });
+      const res = await authFetch(`/api/projects/${id}/join`, { method: "POST" });
       if (!res.ok) throw new Error("Failed to send request");
       setRequested(true);
     } catch (err) {
@@ -120,12 +115,16 @@ function ProjectDetails() {
   if (loading) return <p>Loading...</p>;
   if (!project) return <p>Project not found.</p>;
 
-  // ✅ Check ownership: supports both object and ID string
+  // ✅ Safe ownership check (no crash if null)
   const projectOwnerId =
-    typeof project.createdBy === "object"
+    project?.createdBy && typeof project.createdBy === "object"
       ? project.createdBy._id
-      : project.createdBy;
-  const isOwner = projectOwnerId?.toString() === userId?.toString();
+      : project?.createdBy || "";
+
+  const isOwner =
+    projectOwnerId && userId
+      ? projectOwnerId.toString() === userId.toString()
+      : false;
 
   return (
     <div className="project-details-container">

@@ -157,7 +157,7 @@ function Dashboard() {
           <h3>➕ Create Project</h3>
           <p>Start a new project with your team.</p>
         </Link>
-        <Link to="/current-team" className="dashboard-link current-card">
+        <Link to="/current-teams" className="dashboard-link current-card">
           <h3>➕ Current Teams</h3>
           <p>Check the teams you have joined.</p>
         </Link>

@@ -40,6 +40,24 @@ router.get("/", protect, async (req, res) => {
     res.status(500).json({ message: "Error fetching projects", error });
   }
 });
+// ============================
+// Get all current teams (projects user is in)
+// ============================
+router.get("/current-teams", protect, async (req, res) => {
+  try {
+    // Find projects where the logged-in user is part of members[]
+    const projects = await Project.find({ members: req.user._id })
+      .populate("createdBy", "name email") // who created the project
+      .populate("members", "name email")   // teammates info
+      .sort({ createdAt: -1 });
+
+    res.json(projects);
+  } catch (err) {
+    console.error("Error fetching current teams:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 
 // ==========================
 // GET projects by logged-in user
@@ -250,5 +268,8 @@ router.post("/:id/reject/:userId", protect, async (req, res) => {
     res.status(500).json({ message: "Error rejecting request", error: error.message });
   }
 });
+
+
+
 
 module.exports = router;

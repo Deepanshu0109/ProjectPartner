@@ -20,6 +20,7 @@
   color: #1e3a8a; /* deep college blue */
   background: linear-gradient(90deg, #2563eb, #7c3aed);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 

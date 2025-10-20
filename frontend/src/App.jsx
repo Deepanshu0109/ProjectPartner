@@ -17,6 +17,7 @@ import ProjectDetails from "./pages/ProjectDetails";
 import FindTeams from "./pages/FindTeams";
 import Requests from "./pages/Requests";
 import Activity from "./pages/RequestLogs";
+import CurrentTeams from "./pages/CurrentTeams";
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -93,6 +94,10 @@ function App() {
           element={isLoggedIn ? <Activity /> : <Navigate to="/login" />}
         />
         
+        <Route
+          path="/current-teams"
+          element={isLoggedIn ? <CurrentTeams /> : <Navigate to="/login" />}
+        />
         <Route path="*" element={<Navigate to="/" />} />
         
       </Routes>

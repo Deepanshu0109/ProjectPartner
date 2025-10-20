@@ -1,0 +1,141 @@
+/* === CONTAINER === */
+.project-chat-container {
+  max-width: 900px;
+  margin: 3rem auto;
+  padding: 2rem;
+  font-family: "Poppins", sans-serif;
+  animation: fadeIn 0.6s ease;
+}
+
+.project-chat-container h2 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  background: linear-gradient(90deg, #2563eb, #7c3aed);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* === MEMBERS LIST === */
+.members {
+  background: #f9fafb;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+}
+
+.members h3 {
+  margin-bottom: 0.75rem;
+  color: #2563eb;
+}
+
+.members ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.members li {
+  margin-bottom: 0.5rem;
+  color: #1e293b;
+  font-weight: 500;
+}
+
+/* === CHAT BOX === */
+.chat-box {
+  background: #f9fafb;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+.messages {
+  flex: 1;
+  max-height: 400px;
+  overflow-y: auto;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* === MESSAGE BUBBLES === */
+.message2 {
+  background: #e0e7ff;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  max-width: 70%;
+  font-size: 0.95rem;
+  color: #1e293b;
+  word-break: break-word;
+  align-self: flex-start;
+  transition: all 0.25s ease;
+}
+
+.message2.own {
+  background: #2563eb;
+  color: #fff;
+  align-self: flex-end;
+}
+
+/* === INPUT BOX === */
+.input-box {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.input-box input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  border: 1px solid #d1d5db;
+  font-size: 0.95rem;
+}
+
+.input-box input:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+.input-box button {
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 10px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.input-box button:hover {
+  background: #1e40af;
+}
+
+/* === SCROLLBAR === */
+.messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.messages::-webkit-scrollbar-thumb {
+  background-color: #2563eb;
+  border-radius: 3px;
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 600px) {
+  .message {
+    max-width: 100%;
+  }
+  .input-box {
+    flex-direction: column;
+  }
+  .input-box button {
+    width: 100%;
+  }
+}

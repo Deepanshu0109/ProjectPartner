@@ -3,6 +3,7 @@ const { protect } = require("../middleware/authMiddleware");
 const Project = require("../models/Project");
 const User = require("../models/User");
 const logActivity = require("../utils/logActivity");
+const Message = require("../models/Message");
 const mongoose = require("mongoose");
 const router = express.Router();
 
@@ -10,6 +11,10 @@ const router = express.Router();
 // ==========================
 // CREATE project
 // ==========================
+// ==========================
+// CREATE project
+// ==========================
+// CREATE project
 router.post("/", protect, async (req, res) => {
   try {
     const { name, description, reason, teammatesNeeded, requiredSkills } = req.body;
@@ -21,6 +26,7 @@ router.post("/", protect, async (req, res) => {
       teammatesNeeded,
       requiredSkills,
       createdBy: req.user._id,
+      members: [req.user._id], // ✅ add creator as member automatically
     });
 
     res.status(201).json(project);
@@ -28,6 +34,7 @@ router.post("/", protect, async (req, res) => {
     res.status(500).json({ message: "Error creating project", error });
   }
 });
+
 
 // ==========================
 // GET all projects
@@ -269,7 +276,53 @@ router.post("/:id/reject/:userId", protect, async (req, res) => {
   }
 });
 
+// ==========================
+// GET project members + chat messages
+// ==========================
+router.get("/:id/chat", protect, async (req, res) => {
+  try {
+    const project = await Project.findById(req.params.id)
+      .populate("members", "name email")
+      .populate("createdBy", "name email");
 
+    if (!project) return res.status(404).json({ message: "Project not found" });
+
+    // Here, for simplicity, we will send an empty array of chat messages initially
+    // Later, you can integrate with a Chat model or Socket.IO history if needed
+    res.json({
+      projectId: project._id,
+      projectName: project.name,
+      members: project.members,
+      owner: project.createdBy,
+      messages: [], // placeholder for chat
+    });
+  } catch (error) {
+    console.error("CHAT FETCH ERROR:", error);
+    res.status(500).json({ message: "Error fetching project chat", error: error.message });
+  }
+});
+
+// GET all messages for a project
+router.get("/:id/messages", protect, async (req, res) => {
+  try {
+    const messages = await Message.find({ project: req.params.id })
+      .populate("sender", "name email")
+      .sort({ createdAt: 1 }); // oldest first
+
+    // return messages in frontend-friendly format
+    const formatted = messages.map((m) => ({
+      _id: m._id,
+      sender: { _id: m.sender._id, name: m.sender.name },
+      text: m.text,
+      createdAt: m.createdAt,
+    }));
+
+    res.json(formatted);
+  } catch (err) {
+    console.error("Error fetching messages:", err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
 
 
 module.exports = router;
